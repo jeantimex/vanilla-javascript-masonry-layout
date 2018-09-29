@@ -4,13 +4,17 @@
 }
 
 .masonry {
-  width: 600px;
   margin: 0 auto;
   position: relative;
 }
 
 .masonry-brick {
   position: absolute;
+  overflow: hidden;
+}
+
+figure {
+  overflow: hidden;
 }
 
 .masonry-img {

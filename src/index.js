@@ -53,9 +53,11 @@
   ];
 
   const masonry = document.querySelector(".masonry");
-  const nColumns = 3;
-  const columnPositions = [0, 0, 0];
-  let columnIndex = 0;
+
+  let nColumns;
+  let blockWidth;
+  let columnPositions;
+  let columnIndex;
 
   function addImage(url) {
     const currentPosition = columnPositions[columnIndex];
@@ -66,15 +68,43 @@
       <img src="${url}" class="masonry-img">
     `;
     brick.style.top = currentPosition + "px";
-    brick.style.left = columnIndex * 200 + "px";
-    brick.style.width = 200 + "px";
+    brick.style.left = columnIndex * blockWidth + "px";
+    brick.style.width = blockWidth + "px";
     brick.style.height = height + "px";
     masonry.appendChild(brick);
     columnPositions[columnIndex] += height;
     columnIndex = (columnIndex + 1) % nColumns;
   }
 
-  images.forEach(function(url) {
-    addImage(url);
-  });
+  function render() {
+    masonry.innerHTML = "";
+    images.forEach(function(url) {
+      addImage(url);
+    });
+  }
+
+  // media query event handler
+  if (window.matchMedia) {
+    const mq = window.matchMedia("(min-width: 600px)");
+    mq.addListener(WidthChange);
+    WidthChange(mq);
+  }
+
+  // media query change
+  function WidthChange(mq) {
+    if (mq.matches) {
+      // window width is at least 600px
+      nColumns = 3;
+      blockWidth = 200;
+    } else {
+      // window width is less than 600px
+      nColumns = 1;
+      blockWidth = 580;
+    }
+
+    columnPositions = Array(nColumns).fill(0);
+    columnIndex = 0;
+
+    render();
+  }
 })(window);
