@@ -94,12 +94,12 @@
   function WidthChange(mq) {
     if (mq.matches) {
       // window width is at least 600px
-      nColumns = 3;
+      nColumns = 4;
       blockWidth = 200;
     } else {
       // window width is less than 600px
       nColumns = 1;
-      blockWidth = 580;
+      blockWidth = 600;
     }
 
     columnPositions = Array(nColumns).fill(0);
